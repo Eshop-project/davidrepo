@@ -4,12 +4,8 @@ from . models import *
 def cookieCart(request):
     try:
         cart = json.loads(request.COOKIES['cart'])
-    except:     # test purposes
-        try:
-            if request.test_cart:
-                cart = request.test_cart
-        except: 
-            cart = {}
+    except:
+        cart = {}
     print('Cart:', cart)
 
         

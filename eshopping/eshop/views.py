@@ -1,9 +1,58 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 import json
 import datetime
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+
+#Create views here
 from .models import *
-from . utils import cookieCart, cartData, guestOrder
+from .forms import OrderForm, CreateUserForm
+from .utils import cookieCart, cartData, guestOrder
+
+
+
+def registerPage(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+    else:
+        form = CreateUserForm()
+        if request.method == 'POST':
+            form = CreateUserForm(request.POST)
+            if form.is_valid():
+                form.save()
+                user = form.cleaned_data.get('username')
+                messages.success(request, 'Account was created for ' + user)
+
+                return redirect('login')
+        context = {'form':form}
+        return render(request, 'accounts/register.html', context)
+
+def loginPage(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+    else:
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            user = authenticate(request, username=username, password=password)
+            context = {}
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+            else:
+                messages.info(request, 'Username OR Password is incorrect')
+                render(request, 'accounts/login.html', context)
+        
+        return render(request, 'accounts/login.html', context)
+
+def logoutUser(request):
+    logout(request)
+    return redirect('login')
+
 
 def store(request):
     data = cartData(request)
@@ -11,7 +60,7 @@ def store(request):
     order = data['order']
     items = data['items']
 
-    """
+    
     if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
@@ -25,7 +74,7 @@ def store(request):
 
         items = []
         order = {'get_cart_total':0, 'get_cart_items':0, 'shipping':False}
-        cartItems = order['get_cart_items']"""
+        cartItems = order['get_cart_items']
 
     products = Product.objects.all()
     contex = {'products':products, 'cartItems': cartItems}
@@ -37,7 +86,7 @@ def cart(request):
     order = data['order']
     items = data['items']
 
-    """if request.user.is_authenticated:
+    if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
@@ -83,17 +132,18 @@ def cart(request):
                 if product.digital == False:
                     order['shipping'] = True
             except:
-                pass """
+                pass 
 
     contex = {'items':items, 'order' :order, 'cartItems':cartItems}
     return render(request, 'cart.html', contex)
+
 
 def checkout(request):
     data = cartData(request)
     cartItems = data['cartItems']
     order = data['order']
     items = data['items']
-    """if request.user.is_authenticated:
+    if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
@@ -106,7 +156,7 @@ def checkout(request):
 
         items = []
         order = {'get_cart_total':0, 'get_cart_items':0}
-        cartItems = order['get_cart_items']"""
+        cartItems = order['get_cart_items']
 
     contex = {'items':items, 'order':order, 'cartItems': cartItems}
     return render(request, 'checkout.html', contex)
@@ -138,6 +188,7 @@ def updateItem(request):
   
     return JsonResponse('Item was added', safe=False)
 
+
 def processOrder(request):
     transaction_id = datetime.datetime.now().timestamp()
     data = json.loads(request.body)
@@ -145,7 +196,7 @@ def processOrder(request):
     if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        """
+        
         total = float(data['form']['total'])
         order.transaction_id = transaction_id
 
@@ -161,12 +212,12 @@ def processOrder(request):
                 city=data['shipping']['city'],
                 state=data['shipping']['state'],
                 zipcode=data['shipping']['zipcode'],
-            )"""
+            )
     
     
     else:
         customer, order = guestOrder(request, data)
-        """
+        
         print('User is Not logged in... ')
         print('COOkIES:', request.COOKIES)
         name = data['form']['name']
@@ -194,7 +245,7 @@ def processOrder(request):
                 product=product,
                 order=order,
                 quantity=item['quantity']
-            )"""
+            )
 
     total = float(data['form']['total'])
     order.transaction_id = transaction_id

@@ -1,9 +1,4 @@
-from django.test import RequestFactory, TestCase
-from django.contrib.auth.models import AnonymousUser, User
-from eshop.models import Order
-
-from eshop.utils import cartData
-from eshop.views import cart
+from django.test import TestCase
 
 
 class ViewTest(TestCase):
@@ -93,21 +88,3 @@ class ModelsTest(TestCase):
 
     def test_help(self):
         self.assertTrue(True)
-
-class GuestCheckoutTestCase(TestCase):
-    def setUp(self):
-        self.factory = RequestFactory()
-
-    def test_guest_cart(self):
-        cook = {1:{'quantity': 1}, 2:{'quantity': 1}, 3:{'quantity': 1}}
-
-        request = self.factory.get('/cart')
-        request.test_cart = cook
-        request.user = User
-        request.user.is_authenticated = False
-
-        response = cart(request)
-
-        self.assertEqual(response.status_code, 200) # Make sure everything comes back OK
-        
-
