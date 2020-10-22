@@ -13,6 +13,12 @@ h1,h2,h3,h4,h5,h6{
 	padding: 10px;
 }
 
+#welcomeButton{
+	color: #fff;
+	font: bold;
+
+
+}
 .thumbnail{
 	width: 100%;
 	height: 200px;

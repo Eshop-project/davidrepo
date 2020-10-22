@@ -31,13 +31,13 @@
     }
     const csrftoken = getToken('csrftoken');
     // 
-    function getCookie(name){
-      var cookieArr= document.cookie.split(";");
+    function getCookie(name) {
+      var cookieArr = document.cookie.split(";");
 
-      for (var x=0; x< cookieArr.length; x++){
-        var cookiePair= cookieArr[x].split("=");
+      for (var x = 0; x < cookieArr.length; x++) {
+        var cookiePair = cookieArr[x].split("=");
 
-        if(name== cookiePair[0].trim()){
+        if (name == cookiePair[0].trim()) {
 
           return decodeURIComponent(cookiePair[1]);
         }
@@ -47,10 +47,10 @@
 
     var cart = JSON.parse(getCookie('cart'))
     //d
-    if (cart ==undefined){
+    if (cart == undefined) {
       cart = {}
       console.log('Cart Created!', cart)
-      document.cookie = 'cart='+ JSON.stringify(cart) + ";domain=;path=/"
+      document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
     }
     console.log('Cart', cart)
 
@@ -75,7 +75,17 @@
       </ul>
 
       <div class="form-inline my-2 my-lg-0">
-        <a href="#" class="btn btn-success">Login</a>
+        {% if request.user.is_active %}
+          <span class="hello-msg" id="welcomeButton">
+            Hello, {{request.user}}
+          </span>
+          <span><a href="{% url 'logout' %}" class="btn btn-success">Logout </a></span>
+          {% else %}
+
+        <a href="{% url 'login' %}" class="btn btn-success">Login</a>
+        <a href="{% url 'register' %}" class="btn btn-success">Register</a>
+        {% endif %}
+        
         <a href="{% url 'cart' %}">
           <img id="cart-icon" src="{% static 'img/logo.PNG' %}">
         </a>

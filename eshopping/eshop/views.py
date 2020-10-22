@@ -16,7 +16,7 @@ from .utils import cookieCart, cartData, guestOrder
 
 def registerPage(request):
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('store')
     else:
         form = CreateUserForm()
         if request.method == 'POST':
@@ -32,21 +32,21 @@ def registerPage(request):
 
 def loginPage(request):
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('store')
     else:
         if request.method == 'POST':
             username = request.POST.get('username')
             password = request.POST.get('password')
 
             user = authenticate(request, username=username, password=password)
-            context = {}
+            
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                return redirect('store')
             else:
                 messages.info(request, 'Username OR Password is incorrect')
-                render(request, 'accounts/login.html', context)
-        
+                render(request, 'accounts/login.html')
+        context = {}
         return render(request, 'accounts/login.html', context)
 
 def logoutUser(request):
@@ -62,7 +62,17 @@ def store(request):
 
     
     if request.user.is_authenticated:
-        customer = request.user.customer
+        user = request.user
+
+        try:
+            Customer.objects.get(user = user)
+        except Exception as error:
+            print(error)
+
+            customer = Customer.create(user, user.username, user.email) 
+            customer.save()
+        customer = Customer.objects.get(user = user)
+
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
