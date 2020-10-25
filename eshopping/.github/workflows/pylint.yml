@@ -1,0 +1,24 @@
+name: Pylint
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pylint
+        pip install pylint-django
+        pip install django
+    - name: Analysing the code with pylint
+      run: |
+        pylint --disable=bad-indentation,trailing-newlines,missing-docstring,invalid-name,bad-whitespace,duplicate-code,import-error,consider-using-enumerate,no-name-in-module,no-member,too-many-arguments,no-else-return,line-too-long,missing-final-newline,trailing-whitespace,unused-import,undefined-variable,redundant-unittest-assert,wildcard-import,unused-wildcard-import,pointless-string-statement,unused-variable,singleton-comparison,bare-except,invalid-str-returned,broad-except,too-few-public-methods,wrong-import-order,import-outside-toplevel eShopping
