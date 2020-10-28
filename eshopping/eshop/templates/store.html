@@ -1,0 +1,88 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row">
+    {% for product in products %}
+    <div class="col-lg-4">
+        <img class="thumbnail" src="{{product.imageURL}}">
+        <div class="box-element product">
+            <h6><strong>{{product.name}}</strong></h6>
+            <hr>
+            <button data-product="{{product.id}}" data-action="add"
+                class="btn btn-outline-primary add-btn update-cart">Add to Cart </button>
+            <a class="btn btn-outline-dark" href=#>View</a>
+            <h4 style="display: inline-block;float: right">${{product.price|floatformat:2}}</h4>
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Footer -->
+<footer class="page-footer font-small">
+
+    <!-- Footer Links -->
+    <div class="container text-center text-md-left">
+
+        <!-- Grid row -->
+        <div class="row">
+
+            <!-- Grid column -->
+            <div class="col-md-6 mt-md-0 mt-3">
+
+                <!-- Content -->
+                <h5 class="text-uppercase">Staying Connected</h5>
+                <p>We want the fastest and most reliable services to be brought to you, the customer. Welcome to
+                    eShoppin'</p>
+
+            </div>
+            <!-- Grid column -->
+
+            <hr class="clearfix w-100 d-md-none pb-3">
+
+            <!-- Grid column -->
+            <div class="col-md-3 mb-md-0 mb-3">
+
+                <!-- Links -->
+                <h5 class="text-uppercase">Information</h5>
+
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="#!">About Us</a>
+                    </li>
+                    <li>
+                        <a href="#!">Contact Us</a>
+                    </li>
+                    <li>
+                        <a href="#!">Terms & Conditions</a>
+                    </li>
+                    <li>
+                        <a href="#!">Privacy Policy</a>
+                    </li>
+                    <li>
+                        <a href="#!">-</a>
+                    </li>
+                    <li>
+                        <a href="#!">-</a>
+                    </li>
+                </ul>
+
+            </div>
+            <!-- Grid column -->
+
+        </div>
+        <!-- Grid row -->
+
+    </div>
+    <!-- Footer Links -->
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2018 Copyright: -Edward Thomas-
+    </div>
+    <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+
+{% endblock content %}
