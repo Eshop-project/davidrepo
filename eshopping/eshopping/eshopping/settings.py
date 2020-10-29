@@ -26,7 +26,7 @@ SECRET_KEY = '1qnm_qfknvlk)#+er*06qpn-uxc!s)cijijvw3y%#x&!(5h11g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['eshopproject.pythonanywhere.com','127.0.0.1']
+ALLOWED_HOSTS = ['eshopping.pythonanywhere.com','127.0.0.1']
 
 
 # Application definition
