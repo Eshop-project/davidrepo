@@ -1,0 +1,25 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+
+<div>
+    <div class="card border-dark mb-3" style="max-width: 40rem;">
+        <div class="card-body">
+            <h2>Product: {{ product.name }} </h2>
+            <h2>price: ${{ product.price }} </h2>
+            <img width="300" src="/static/img/{{ product.imageURL }}" alt="{{ product }}">
+        </div>
+        <div class="card-body">
+            <p> {{ product.body }} </p>
+            <button data-product="{{product.id}}" data-action="add"
+            class="btn btn-outline-primary add-btn update-cart">Add to Cart </button>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+{% endblock content %}

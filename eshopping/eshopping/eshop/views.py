@@ -8,12 +8,20 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User as Accounts
 
+from django.views.generic import DetailView
+
 #Create views here
 from .models import *
 from .forms import OrderForm, CreateUserForm
 from .utils import cookieCart, cartData, guestOrder
 
+class productview(DetailView):
+    model = Product
+    template_name = 'view.html'
+
 def registerPage(request):
+    data = cartData(request)
+    cartItems = data['cartItems']
     if request.user.is_authenticated:
         return redirect('store')
     else:
@@ -33,10 +41,12 @@ def registerPage(request):
             # customer = Customer.create(request.user) 
             # customer.save()
 
-        context = {'form':form}
+        context = {'form':form,'cartItems': cartItems}
         return render(request, 'accounts/register.html', context)
 
 def loginPage(request):
+    data = cartData(request)
+    cartItems = data['cartItems']
     if request.user.is_authenticated:
         return redirect('store')
     else:
@@ -52,7 +62,7 @@ def loginPage(request):
             else:
                 messages.info(request, 'Username OR Password is incorrect')
                 render(request, 'accounts/login.html')
-        context = {}
+        context = {'cartItems': cartItems}
         return render(request, 'accounts/login.html', context)
 
 def logoutUser(request):
@@ -69,6 +79,7 @@ def store(request):
     products = Product.objects.all()
     contex = {'products':products, 'cartItems': cartItems}
     return render(request, 'store.html', contex)
+
 
 def cart(request):
     data = cartData(request)
@@ -148,5 +159,24 @@ def processOrder(request):
             zipcode=data['shipping']['zipcode'],
         )
     return JsonResponse('Payment Complete!', safe=False)
+
+def terms(request):
+    data = cartData(request)
+    cartItems = data['cartItems']
+    order = data['order']
+    items = data['items']
+
+    context = {'items':items, 'order':order, 'cartItems': cartItems}
+    return render(request, 'terms.html', context)
+
+def about(request):
+    data = cartData(request)
+    cartItems = data['cartItems']
+    order = data['order']
+    items = data['items']
+
+    context = {'items':items, 'order':order, 'cartItems': cartItems}
+    return render(request, 'about.html', context)
+
 
 

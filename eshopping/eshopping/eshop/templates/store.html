@@ -11,7 +11,7 @@
             <hr>
             <button data-product="{{product.id}}" data-action="add"
                 class="btn btn-outline-primary add-btn update-cart">Add to Cart </button>
-            <a class="btn btn-outline-dark" href=#>View</a>
+            <a class="btn btn-outline-dark" href="{% url 'view' product.pk %}">View</a>
             <h4 style="display: inline-block;float: right">${{product.price|floatformat:2}}</h4>
 
         </div>
@@ -49,22 +49,13 @@
 
                 <ul class="list-unstyled">
                     <li>
-                        <a href="#!">About Us</a>
+                        <a href="abouteshopping/">About Us</a>
                     </li>
                     <li>
-                        <a href="#!">Contact Us</a>
+                        <a href="abouteshopping/#Contact">Contact Us</a>
                     </li>
                     <li>
-                        <a href="#!">Terms & Conditions</a>
-                    </li>
-                    <li>
-                        <a href="#!">Privacy Policy</a>
-                    </li>
-                    <li>
-                        <a href="#!">-</a>
-                    </li>
-                    <li>
-                        <a href="#!">-</a>
+                        <a href="terms&conditions/">Terms & Conditions</a>
                     </li>
                 </ul>
 
@@ -78,7 +69,7 @@
     <!-- Footer Links -->
 
     <!-- Copyright -->
-    <div class="footer-copyright text-center py-3">© 2018 Copyright: -Edward Thomas-
+    <div class="footer-copyright text-center py-3">© 2020 Copyright: -Eshopping-
     </div>
     <!-- Copyright -->
 

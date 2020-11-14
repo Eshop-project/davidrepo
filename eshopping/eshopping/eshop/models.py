@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
@@ -30,6 +31,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=7, decimal_places=2)
     digital = models.BooleanField(default=False, null=True, blank=False)
     image = models.ImageField(null=True, blank=True)
+    body = models.TextField(default='Item Description',null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -42,9 +44,12 @@ class Product(models.Model):
             url = ''
         return url
 
+    def get_absolute_url(self): 
+        return reverse('view', args=[str(self.id)])
+
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
-    date_orderd = models.DateTimeField(auto_now_add=True)
+    date_orderd = models.DateTimeField(auto_now_add=True)  
     complete = models.BooleanField(default=False, null=True, blank=False)
     transaction_id = models.CharField(max_length=200, null=True)
 
