@@ -18,6 +18,12 @@ from .utils import cookieCart, cartData, guestOrder
 class productview(DetailView):
     model = Product
     template_name = 'view.html'
+    def cartview(request):
+        data = cartData(request)
+        cartItems = data['cartItems']  
+        context = {'cartItems': cartItems}
+        return render(request, template_name, context)
+        
 
 def registerPage(request):
     data = cartData(request)
@@ -35,11 +41,6 @@ def registerPage(request):
                 usertest = Accounts.objects.get(username=user)
                 print(usertest)
                 return redirect('login')
-
-                
-            # # Let's create associated customer
-            # customer = Customer.create(request.user) 
-            # customer.save()
 
         context = {'form':form,'cartItems': cartItems}
         return render(request, 'accounts/register.html', context)
@@ -73,8 +74,6 @@ def logoutUser(request):
 def store(request):
     data = cartData(request)
     cartItems = data['cartItems']
-    # order = data['order']
-    # items = data['items']
 
     products = Product.objects.all()
     contex = {'products':products, 'cartItems': cartItems}

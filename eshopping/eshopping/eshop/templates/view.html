@@ -6,12 +6,26 @@
 <div>
     <div class="card border-dark mb-3" style="max-width: 40rem;">
         <div class="card-body">
-            <h2>Product: {{ product.name }} </h2>
-            <h2>price: ${{ product.price }} </h2>
+            <h2> {{ product.name }} </h2>
+            <h2>Price: ${{ product.price }} </h2>
             <img width="300" src="/static/img/{{ product.imageURL }}" alt="{{ product }}">
         </div>
         <div class="card-body">
             <p> {{ product.body }} </p>
+            <p>
+            <h2>Size</h2>
+            <div class="btn-group mr-2" role="group">
+                <button type="button" class="btn btn-secondary">8</button>
+                <button type="button" class="btn btn-secondary">8.5</button>
+                <button type="button" class="btn btn-secondary">9</button>
+                <button type="button" class="btn btn-secondary">9.5</button>
+                <button type="button" class="btn btn-secondary">10</button>
+                <button type="button" class="btn btn-secondary">10.5</button>
+                <button type="button" class="btn btn-secondary">11</button>
+                <button type="button" class="btn btn-secondary">11.5</button>
+                <button type="button" class="btn btn-secondary">12</button>
+            </div>
+            </p>
             <button data-product="{{product.id}}" data-action="add"
             class="btn btn-outline-primary add-btn update-cart">Add to Cart </button>
         </div>
