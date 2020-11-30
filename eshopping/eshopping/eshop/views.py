@@ -18,11 +18,13 @@ from .utils import cookieCart, cartData, guestOrder
 class productview(DetailView):
     model = Product
     template_name = 'view.html'
-    def cartview(request):
-        data = cartData(request)
+
+    def get_context_data(self, **kwargs):
+        context = super(productview, self).get_context_data(**kwargs)
+        data = cartData(self.request)
         cartItems = data['cartItems']  
-        context = {'cartItems': cartItems}
-        return render(request, template_name, context)
+        context['cartItems'] = cartItems
+        return context
         
 
 def registerPage(request):

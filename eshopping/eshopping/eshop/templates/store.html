@@ -11,8 +11,24 @@
             <hr>
             <button data-product="{{product.id}}" data-action="add"
                 class="btn btn-outline-primary add-btn update-cart">Add to Cart </button>
+                <span class="dropdown">
+                    <button class="btn btn-outline-primary dropdown-toggle" id='mydrop' type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Size
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <button class="dropdown-item" name='item' href="">8</button>
+                      <button class="dropdown-item" name='item' href="">8.5</button>
+                      <button class="dropdown-item" name='item' href="">9</button>
+                      <button class="dropdown-item" name='item' href="">9.5</button>
+                      <button class="dropdown-item" name='item' href="">10</button>
+                      <button class="dropdown-item" name='item' href="">10.5</button>
+                      <button class="dropdown-item" name='item' href="">11</button>
+                      <button class="dropdown-item" name='item' href="">11.5</button>
+                      <button class="dropdown-item" name='item' href="">12</button>
+                    </div>
+                </span>
             <a class="btn btn-outline-dark" href="{% url 'view' product.pk %}">View</a>
-            <h4 style="display: inline-block;float: right">${{product.price|floatformat:2}}</h4>
+            <h6 style="display: inline-block; float: right">${{product.price|floatformat:2}}</h6>
 
         </div>
     </div>
