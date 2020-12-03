@@ -3,21 +3,22 @@ var updateBtns = document.getElementsByClassName('update-cart')
 for(var i=0; i < updateBtns.length; i++){
     updateBtns[i].addEventListener('click', function(){
         var productId = this.dataset.product
+        var size = this.dataset.product.size
         var action = this.dataset.action
         console.log('productId:', productId, 'action:', action)
 
         console.log('USER', user)
         if(user == 'AnonymousUser'){
             //console.log('Not logged in')
-            addCookieItem(productId, action)
+            addCookieItem(productId, action, size)
         }else{
-            updateUserOrder(productId, action)
+            updateUserOrder(productId, action, size)
         }
     })
 
 }
 
-function addCookieItem(productId, action){
+function addCookieItem(productId, action, size){
     console.log('Not logged in....')
 
     if (action == 'add'){
@@ -37,11 +38,12 @@ function addCookieItem(productId, action){
         }
     }
     console.log('Cart: ',cart)
+    console.log('size', size)
     document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
     location.reload()
 }
 
-function updateUserOrder(productId, action){
+function updateUserOrder(productId, action, size){
     console.log('User is logged in, sending data...')
 
     var url = '/update_item/'

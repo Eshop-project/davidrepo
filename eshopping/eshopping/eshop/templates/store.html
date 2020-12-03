@@ -12,23 +12,21 @@
             <button data-product="{{product.id}}" data-action="add"
                 class="btn btn-outline-primary add-btn update-cart">Add to Cart </button>
                 <span class="dropdown">
-                    <button class="btn btn-outline-primary dropdown-toggle" id='mydrop' type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Size
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <button class="dropdown-item" name='item' href="">8</button>
-                      <button class="dropdown-item" name='item' href="">8.5</button>
-                      <button class="dropdown-item" name='item' href="">9</button>
-                      <button class="dropdown-item" name='item' href="">9.5</button>
-                      <button class="dropdown-item" name='item' href="">10</button>
-                      <button class="dropdown-item" name='item' href="">10.5</button>
-                      <button class="dropdown-item" name='item' href="">11</button>
-                      <button class="dropdown-item" name='item' href="">11.5</button>
-                      <button class="dropdown-item" name='item' href="">12</button>
-                    </div>
+                        <button data-product="{{product.id}}" class="btn btn-outline-dark dropdown-toggle" data-action="add" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                          Size
+                          <span class="caret"></span>
+                        </button>
+                        <ul data-product="{{product.id}}" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                          <li><a href="#" data-value="8">8</a></li>
+                          <li><a href="#" data-value="9">9</a></li>
+                          <li><a href="#" data-value="10">10</a></li>
+                          <li><a href="#" data-value="11">11</a></li>
+                          <li><a href="#" data-value="12">12</a></li>
+                          <li><a href="#" data-value="13">13</a></li>
+                        </ul>
                 </span>
             <a class="btn btn-outline-dark" href="{% url 'view' product.pk %}">View</a>
-            <h6 style="display: inline-block; float: right">${{product.price|floatformat:2}}</h6>
+            <h5 style="display: inline-block; float: right">${{product.price|floatformat:2}}</h5>
 
         </div>
     </div>

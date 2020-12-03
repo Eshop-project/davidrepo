@@ -1,18 +1,11 @@
 var drop = document.getElementsByName('item');
 var list_of_sizes = []
 
-if (drop) {
-    for(var i=0; i < drop.length; i++){
-        drop[i].id = String(i)
-        drop[i].addEventListener('click', returnNum)
-    }
-}
+$(".dropdown-menu li a").click(function(){
+    $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
+    $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
+  });
 
-function returnNum() {
-    if (drop[0].click()){
-        console.log(0)
-    }
-}
 
 
 
