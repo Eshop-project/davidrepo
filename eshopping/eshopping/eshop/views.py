@@ -104,20 +104,24 @@ def checkout(request):
 
 def updateItem(request):
     data = json.loads(request.body)
+    size = int(data['size'])
     productId = data['productId']
     action = data['action']
 
     print('Action:', action)
     print('ProductId:', productId)
+    print('Size and type:', size)
+    print(type(size))
 
     user = request.user
 
     customer = Customer.check_user(user)
     product = Product.objects.get(id=productId)
+    product.size = size
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
 
-    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
-
+    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product, size = size)
+    print(orderItem)
     if action == 'add':
         orderItem.quantity = (orderItem.quantity + 1)
     elif action == 'remove':

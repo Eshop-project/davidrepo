@@ -1,11 +1,25 @@
 var updateBtns = document.getElementsByClassName('update-cart')
+var value = '8'
+
+$(".dropdown-menu li button").click(function(){
+    $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
+    $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
+    value = $(this).parents(".dropdown").find('.btn').val();
+  //  $(this).parents(".dropdown").find('#AddProduct').val($(this).data('value'));
+  });
 
 for(var i=0; i < updateBtns.length; i++){
     updateBtns[i].addEventListener('click', function(){
         var productId = this.dataset.product
-        var size = this.dataset.product.size
+        var size = 0
+        if (this.dataset.value){
+            size = this.dataset.value
+            console.log(size)
+        }else{
+            size = value
+        }
         var action = this.dataset.action
-        console.log('productId:', productId, 'action:', action)
+        console.log('productId:', productId, 'action:', action, 'size:', size)
 
         console.log('USER', user)
         if(user == 'AnonymousUser'){
@@ -18,23 +32,26 @@ for(var i=0; i < updateBtns.length; i++){
 
 }
 
+
 function addCookieItem(productId, action, size){
     console.log('Not logged in....')
 
     if (action == 'add'){
-        if(cart[productId] == undefined){
-            cart[productId]= {'quantity': 1}
+        let position = (Number(productId)*Number(size))*(Number(size))
+        if(cart[position] == undefined){
+            cart[position]= {'quantity': 1, 'size': size}
         }else{
-            cart[productId]['quantity'] +=1
+            cart[position]['quantity'] +=1
         }
     }
 
     if(action == 'remove'){
-        cart[productId]['quantity'] -= 1
+        let position = (Number(productId)*Number(size))*(Number(size))
+        cart[position]['quantity'] -= 1
 
-        if(cart[productId]['quantity']<=0){
+        if(cart[position]['quantity']<=0){
             console.log('Remove item!')
-            delete cart[productId]
+            delete cart[position]
         }
     }
     console.log('Cart: ',cart)
@@ -47,6 +64,7 @@ function updateUserOrder(productId, action, size){
     console.log('User is logged in, sending data...')
 
     var url = '/update_item/'
+    var position = (Number(productId)*Number(size))*(Number(size))
 
     fetch(url, {
         method: 'POST',
@@ -54,7 +72,7 @@ function updateUserOrder(productId, action, size){
             'Content-Type':'application/json',
             'X-CSRFToken':csrftoken,
         },
-        body:JSON.stringify({'productId': productId, 'action': action})
+        body:JSON.stringify({'productId': productId, 'action': action, 'size': size})
     })
     
     .then((response) =>{

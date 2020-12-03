@@ -9,20 +9,20 @@
         <div class="box-element product">
             <h6><strong>{{product.name}}</strong></h6>
             <hr>
-            <button data-product="{{product.id}}" data-action="add"
+            <button id='AddProduct' data-product="{{product.id}}" data-action="add" data-value=''
                 class="btn btn-outline-primary add-btn update-cart">Add to Cart </button>
                 <span class="dropdown">
-                        <button data-product="{{product.id}}" class="btn btn-outline-dark dropdown-toggle" data-action="add" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <button class="btn btn-outline-dark dropdown-toggle" id='Size' type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                           Size
                           <span class="caret"></span>
                         </button>
                         <ul data-product="{{product.id}}" class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                          <li><a href="#" data-value="8">8</a></li>
-                          <li><a href="#" data-value="9">9</a></li>
-                          <li><a href="#" data-value="10">10</a></li>
-                          <li><a href="#" data-value="11">11</a></li>
-                          <li><a href="#" data-value="12">12</a></li>
-                          <li><a href="#" data-value="13">13</a></li>
+                          <li><button data-value="8">8</button></li>
+                          <li><button data-value="9">9</button></li>
+                          <li><button data-value="10">10</button></li>
+                          <li><button data-value="11">11</button></li>
+                          <li><button data-value="12">12</button></li>
+                          <li><button data-value="13">13</button></li>
                         </ul>
                 </span>
             <a class="btn btn-outline-dark" href="{% url 'view' product.pk %}">View</a>

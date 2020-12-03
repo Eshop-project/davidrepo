@@ -21,17 +21,18 @@ def cookieCart(request):
     for x in cart:
         try:
             cartItems += cart[x]["quantity"]
-            product = Product.objects.get(id=x)
+            size = int(cart[x]['size'])
+            product = Product.objects.get(id=(int(x)/(size*size)))
             total = (product.price * cart[x]["quantity"])
 
             order['get_cart_total'] += total
             order['get_cart_items'] += cart[x]['quantity']
             item ={
+                'size': size,
                 'product':{
                     'id':product.id,
                     'name':product.name,
                     'price':product.price,
-                    'size':product.size,
                     'imageURL':product.imageURL,
                     },
                 'quantity':cart[x]['quantity'],
@@ -87,6 +88,7 @@ def guestOrder(request, data):
 
         orderItem = OrderItem.objects.create(
             product=product,
+            size = size,
             order=order,
             quantity=item['quantity']
         )

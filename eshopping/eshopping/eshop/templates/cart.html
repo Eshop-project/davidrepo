@@ -44,13 +44,13 @@
                 <div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
                 <div style="flex:2">{{item.product.name}}</div>
                 <div style="flex:1">${{item.product.price|floatformat:2}}</div>
-                <div style="flex:1">{{item.product.size}}</div>
+                <div style="flex:1">{{item.size}}</div>
                 <div style="flex:1">
                     <p class="quantity">{{item.quantity}}</p>
                     <div class="quantity">
 
-                        <img data-product={{item.product.id}} data-action="add" class="chg-quantity update-cart" src="{% static 'img/uparrow.PNG' %}">
-                        <img data-product={{item.product.id}} data-action="remove" class="chg-quantity update-cart" src="{% static 'img/downarrow.PNG' %}">
+                        <img data-product={{item.product.id}} data-value={{item.size}} data-action="add" class="chg-quantity update-cart" src="{% static 'img/uparrow.PNG' %}">
+                        <img data-product={{item.product.id}} data-value={{item.size}} data-action="remove" class="chg-quantity update-cart" src="{% static 'img/downarrow.PNG' %}">
 
                     </div>
 
